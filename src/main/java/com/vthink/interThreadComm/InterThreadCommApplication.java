@@ -22,20 +22,40 @@ public class InterThreadCommApplication {
 		System.out.println("Choose thread communication method:");
 		System.out.println("1. BlockingQueue");
 		System.out.println("2. wait/notify");
+        System.out.println("3. SynchronousQueue");
+        System.out.println("4. Exchanger");
+        System.out.println("5. CompletableFuture");
+        System.out.println("6. ReentrantLock with Condition");
 
 		int choice = scanner.nextInt();
 
 		ThreadCommunicationMethod communicationMethod;
 
 		// Based on the choice, get the appropriate bean from the Spring context
-		if (choice == 1) {
-			communicationMethod = (ThreadCommunicationMethod) context.getBean("blockingQueueCommunication");
-		} else if (choice == 2) {
-			communicationMethod = (ThreadCommunicationMethod) context.getBean("waitNotifyCommunication");
-		} else {
-			System.out.println("Invalid choice");
-			return;
-		}
+		switch (choice) {
+        case 1:
+            communicationMethod = (ThreadCommunicationMethod) context.getBean("blockingQueueCommunication");
+            break;
+        case 2:
+            communicationMethod = (ThreadCommunicationMethod) context.getBean("waitNotifyCommunication");
+            break;
+        case 3:
+            communicationMethod = (ThreadCommunicationMethod) context.getBean("synchronousQueueCommunication");
+            break;
+        case 4:
+            communicationMethod = (ThreadCommunicationMethod) context.getBean("exchangerCommunication");
+            break;
+        case 5:
+            communicationMethod = (ThreadCommunicationMethod) context.getBean("completableFutureCommunication");
+            break;
+        case 6:
+            communicationMethod = (ThreadCommunicationMethod) context.getBean("reentrantLockCommunication");
+            break;
+        default:
+            System.out.println("Invalid choice");
+            return;
+    }
+
 
 		// Execute the selected communication method
 		try {
